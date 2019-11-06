@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuyanan.movie.dao.MovieMapper">
+<select id="list" resultType="com.liuyanan.movie.domain.Vo">
+select * from t_movie 
+<where>
+<if test="name != null and name != ''">
+and name=#{name}
+</if>
+
+<if test="startTime != null and startTime != ''">
+and playtime>=#{startTime}
+</if>
+
+<if test="endTime != null and endTime != ''">
+and playtime &lt;= #{endTime}
+</if>
+
+<if test="actor != null and actor != ''">
+and actor=#{actor}
+</if>
+
+<if test="startPrice != null and startPrice != 0">
+and price>=#{startPrice}
+</if>
+
+<if test="endTime != null and endTime != ''">
+and price &lt;= #{endPrice}
+</if>
+
+<if test="year != null and year != 0">
+and year = #{year}
+</if>
+
+<if test="startLong != null and startLong != 0">
+and longtime>=#{startLong}
+</if>
+
+<if test="endLong != null and endLong != ''">
+and longtime &lt;= #{endLong}
+</if>
+
+</where>
+<if test="orderField != null and orderField != ''">
+order by ${orderField} ${orderMethod}
+</if>
+</select>
+<delete id="delAll">
+delete from t_movie where id in
+<foreach collection="array" item="id" open="(" close=")" separator=",">
+#{id}
+</foreach>
+</delete>
+</mapper>
